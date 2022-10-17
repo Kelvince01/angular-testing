@@ -24,20 +24,42 @@ module.exports = function (config) {
     jasmineHtmlReporter: {
       suppressAll: true // removes the duplicated traces
     },
+    // coverageReporter: {
+    //   dir: require('path').join(__dirname, './coverage/angular-testing'),
+    //   subdir: '.',
+    //   reporters: [
+    //     { type: 'html' },
+    //     { type: 'text-summary' }
+    //   ]
+    // },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/angular-testing'),
+      dir: require('path').join(__dirname, './coverage/<project-name>'),
       subdir: '.',
-      reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
-      ]
-    },
+      // reporters: [
+      //   { type: 'html' },
+      //   { type: 'text-summary' }
+      // ],
+      check: {
+        global: {
+          statements: 80,
+          branches: 80,
+          functions: 80,
+          lines: 80
+        }
+      }
+    }
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'ChromeHeadlessCI'],
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
     singleRun: false,
     restartOnFileChange: true
   });
